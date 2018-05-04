@@ -7,10 +7,13 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "Your URL is %s.", r.URL.Path[1:])
+	http.ServeFile(w, r, "./" + r.URL.Path)
+	fmt.Printf("%s\n", r.URL.Path)
 }
 
 func main() {
     http.HandleFunc("/", handler)
-    log.Fatal(http.ListenAndServe(":8080", nil))
+	if err := http.ListenAndServe(":8090", nil);err != nil {
+        log.Fatal("ListenAndServe: ", err)
+}
 }
